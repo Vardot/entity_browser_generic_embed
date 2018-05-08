@@ -1,0 +1,7 @@
+name: 'Entity Browser File Embed'
+core: 8.x
+type: module
+description: 'Entity Browser Generic File Embed'
+package: Media
+dependencies:
+  - entity_browser_generic_embed

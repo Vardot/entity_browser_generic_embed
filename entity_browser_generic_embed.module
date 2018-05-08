@@ -27,38 +27,6 @@ use Drupal\media\MediaInterface;
 use Drupal\media\MediaTypeInterface;
 use Drupal\views\ViewEntityInterface;
 
-use Drupal\entity_browser_generic_embed\OverrideHelper as Override;
-use Drupal\entity_browser_generic_embed\Plugin\media\Source\File;
-use Drupal\entity_browser_generic_embed\Plugin\media\Source\Image;
-use Drupal\entity_browser_generic_embed\Plugin\media\Source\Video;
-
-/**
- * Implements hook_media_source_info_alter().
- */
-function entity_browser_generic_embed_media_source_info_alter(array &$sources) {
-  $sources['file']['input_match']['field_types'] = ['file'];
-  Override::pluginClass($sources['file'], File::class);
-  
-  $sources['image']['input_match']['field_types'] = ['image'];
-  Override::pluginClass($sources['image'], Image::class);
-
-  // When a media item that uses the Image plugin is embedded in a text editor,
-  // prefer the media_image display plugin.
-  // @see \Drupal\lightning_media\Form\EntityEmbedDialog::buildEmbedStep()
-  $sources['image']['entity_embed_display'] = 'media_image';
-  
-  $sources['video_embed_field']['input_match'] = [
-    'field_types' => [
-      'string',
-      'string_long',
-      'video_embed_field',
-    ],
-  ];
-  $sources['video_embed_field']['preview'] = TRUE;
-
-  Override::pluginClass($sources['video_embed_field'], Video::class);
-}
-
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
@@ -83,20 +51,6 @@ function entity_browser_generic_embed_view_insert(ViewEntityInterface $view) {
     $view->getExecutable()->current_display = NULL;
     $view->save();
 
-    /** @var \Drupal\entity_browser\EntityBrowserInterface $browser */
-    $browser = EntityBrowser::load('media_browser');
-    $browser->addWidget([
-      'id' => 'view',
-      'label' => 'Library',
-      'weight' => -10,
-      'settings' => [
-        'view' => 'media',
-        'view_display' => $display_id,
-        'submit_text' => 'Place',
-        'auto_select' => FALSE,
-      ],
-    ]);
-    $browser->save();
   }
 }
 
@@ -274,42 +228,6 @@ function entity_browser_generic_embed_preprocess_image_style(array &$variables) 
   }
 }
 
-
-/**
- * Implements hook_ENTITY_TYPE_insert().
- */
-function entity_browser_generic_embed_media_type_insert(MediaTypeInterface $media_type) {
-  // Don't do anything during config sync.
-  if (\Drupal::isConfigSyncing()) {
-    return;
-  }
-
-  \Drupal::entityTypeManager()
-    ->getStorage('field_config')
-    ->create([
-      'field_name' => 'field_media_in_library',
-      'entity_type' => 'media',
-      'bundle' => $media_type->id(),
-      'label' => t('Save to my media library'),
-      'settings' => [
-        'on_label' => t('Saved to my media library'),
-        'off_label' => t('Not in my media library'),
-      ],
-      'default_value' => [
-        ['value' => TRUE],
-      ],
-    ])
-    ->save();
-
-  entity_get_form_display('media', $media_type->id(), 'default')
-    ->setComponent('field_media_in_library', [
-      'type' => 'boolean_checkbox',
-      'settings' => [
-        'display_label' => TRUE,
-      ],
-    ])
-    ->save();
-}
 
 /**
  * Implements hook_form_FORM_ID_alter().

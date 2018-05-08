@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Support for file media assets in Lightning.
+ */
+
+use Drupal\entity_browser_generic_embed\OverrideHelper as Override;
+use Drupal\entity_browser_file_embed\Plugin\media\Source\File;
+
+/**
+ * Implements hook_media_source_info_alter().
+ */
+function entity_browser_file_embed_source_info_alter(array &$sources) {
+  $sources['file']['input_match']['field_types'] = ['file'];
+  Override::pluginClass($sources['file'], File::class);
+}

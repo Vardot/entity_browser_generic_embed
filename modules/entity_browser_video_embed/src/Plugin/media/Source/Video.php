@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\entity_browser_generic_embed\Plugin\media\Source;
+namespace Drupal\entity_browser_video_embed\Plugin\media\Source;
 
 use Drupal\entity_browser_generic_embed\InputMatchInterface;
 use Drupal\media\MediaTypeInterface;

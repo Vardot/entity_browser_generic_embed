@@ -22,7 +22,12 @@
       "url": "https://packages.drupal.org/8"
     }
   ],
-  "require": { },
+  "require": {
+    "drupal/entity_browser": "^2.0-alpha2",
+    "drupal/media_entity_instagram": "^2.0-alpha1",
+    "drupal/media_entity_twitter": "^2.0-alpha2",
+    "drupal/video_embed_field": "^2.0"
+  },
   "extra": {
     "branch-alias": {
       "dev-8.x-1.x": "8.1.x-dev"
