@@ -1,8 +1,0 @@
-name: 'Entity Browser Image Embed'
-core: 8.x
-type: module
-package: Media
-description: 'Entity Browser Generic Image Embed'
-dependencies:
-  - entity_browser_generic_embed
-

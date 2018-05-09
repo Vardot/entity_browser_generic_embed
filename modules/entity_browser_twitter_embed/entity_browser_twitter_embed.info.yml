@@ -1,8 +1,0 @@
-name: 'Entity Browser Twitter Embed'
-core: 8.x
-type: module
-package: Media
-description: 'Entity Browser Generic Twitter Embed'
-dependencies:
-  - entity_browser_generic_embed
-  - media_entity_twitter
