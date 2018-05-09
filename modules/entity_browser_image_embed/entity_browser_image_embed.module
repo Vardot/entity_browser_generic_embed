@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Support for image media assets in Lightning.
+ * Support for image media assets.
  */
 
 use Drupal\Core\Entity\Display\EntityFormDisplayInterface;

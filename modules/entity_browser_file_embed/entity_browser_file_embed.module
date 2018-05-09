@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Support for file media assets in Lightning.
+ * Support for file media assets.
  */
 
 use Drupal\entity_browser_generic_embed\OverrideHelper as Override;
